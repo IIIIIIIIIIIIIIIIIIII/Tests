@@ -18,7 +18,7 @@ using std::string;
 #include <vector>
 using std::vector;
 
-void sort(vector<int> x){
+void sort(vector<int>& x){
 	for(size_t i = 0; i < x.size() - 1; i++){
 			int indexOfsmallest = i;
 			int temp = x[i];
@@ -30,23 +30,105 @@ void sort(vector<int> x){
 		x[indexOfsmallest] = temp;
 	}
 	for(int i = 0; i < x.size(); i++){
-		cout << x[i] << endl;
+		cout << x[i] << ",";
 	}
+	cout << endl;
+}
+/* TODO: write a function to merge 2 sorted vectors of integers
+ * into a single sorted vector.  */
+vector<int> sort2(vector<int> v, vector<int> v2){
+
+	vector<int> merged;
+	int larger = v.size(), smaller = v2.size(), j;
+
+	if(larger < smaller){
+		int temp = smaller;
+		smaller = larger;
+		larger = smaller;
+		}
+
+	for(int i = 0; i < larger; i++){
+		if(j < smaller){
+			if(v[j] < v[i]){
+				merged.push_back(v[j]);
+				j++;
+			}
+			else
+				merged.push_back(v[i]);
+		}
+		else
+			merged.push_back(v[i]);
+	}
+	return merged;
 }
 
+
+/* TODO: write a *binary search* on a sorted vector.  The idea is to
+ * kind of emulate the process you use to find a particular page in a book:
+ * 1. open the book to some page in the middle.
+ * 2. if the page number was too high, open to the middle of the pages to the
+ *    left; if it was too low, open to the middle of the pages to the right
+ * 3. continue as above until you found the right page.
+ *
+ * This might be a little challenging.  Ask questions if you get stuck.
+ * */
+
+//NOTE: This return the index of the vector to return the position in 1 to n add 1 to min in returns.
 int binarySearch(vector<int> v, int x){
-	int y = v.size();
-	for(size_t i = 0; i < size(); i++){ 
+
+	int low = 0, high = v.size()-1, mid;
+	while(low <= high){
+		mid = (low + high)/2;
+		if(x == v[mid])
+			return mid+1;
+		if(x > v[mid])
+			low = mid-1;
+		else
+			high = mid;
 	}
+	return mid;
 }
 
 int main(){
 	int x;
 	vector<int> v;
 
+	cout << "Enter some integer (ctrl D to quit): " << endl;
 	while(cin>>x){
 		v.push_back(x);}
 
 	sort(v);
+	//cout <<"Enter an in from the list of integer: " << endl;
+	x = 2;
+	cout << binarySearch(v,x) << endl;
+
+	// Tester for sort2 function
+	vector<int> s, l;                    
+	for(int i = 2; i <= 20; i += 2){        // Create vector list of 2n up to 20
+		s.push_back(i);
+	}
+	for(int i = 0; i < 20; i+= 3){          // Create vector list of 3n up to 18 starting with 0
+		l.push_back(i);
+	}
+
+	cout << "First vector: ";
+	for(int i = 0; i < s.size(); i++){
+		cout << s[i] << " "; 
+	}
+	cout << endl << "Second vector: ";
+	for(int i = 0; i < l.size(); i++){
+		cout << l[i] << " "; 
+	}
+
+	vector<int> merged = sort2(s,l);
+	cout << endl <<"Merged vector 1 and 2: ";
+	for(int i = 0; i < merged.size(); i++){
+		cout << merged[i] << " "; 
+	}
+
+
+
+
+
 	return 0;
 }
