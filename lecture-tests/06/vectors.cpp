@@ -36,6 +36,7 @@ void sort(vector<int>& x){
 }
 /* TODO: write a function to merge 2 sorted vectors of integers
  * into a single sorted vector.  */
+# if 0
 vector<int> sort2(vector<int> v, vector<int> v2){
 
 	vector<int> merged;
@@ -61,7 +62,35 @@ vector<int> sort2(vector<int> v, vector<int> v2){
 	}
 	return merged;
 }
+# endif
+vector<int> sort2(vector<int> v1, vector<int> v2){
+	int large, small;
+	vector<int> merge;
 
+	if(v1.size() < v2.size()){
+		large = v2.size();
+		small = v1.size();
+	}
+	else{
+		large = v1.size();
+		small = v2.size();
+	}
+	int i = 0, j = 0;
+	while(i < large){
+		if(v1[i] < v2[j]){
+			merge.push_back(v1[i]);
+			i++;
+		}
+		else{
+			merge.push_back(v2[j]);
+			j++;}
+	}
+		while(j < small){ 
+		merge.push_back(v2[j]);
+		j++;
+	}
+	return merge;
+}
 
 /* TODO: write a *binary search* on a sorted vector.  The idea is to
  * kind of emulate the process you use to find a particular page in a book:
@@ -76,21 +105,21 @@ vector<int> sort2(vector<int> v, vector<int> v2){
 //NOTE: This return the index of the vector to return the position in 1 to n add 1 to min in returns.
 int binarySearch(vector<int> v, int x){
 
-	int low = 0, high = v.size()-1, mid;
+	int low = 0, high = v.size()-1, mid = 0;
 	while(low <= high){
 		mid = (low + high)/2;
 		if(x == v[mid])
 			return mid+1;
 		if(x > v[mid])
-			low = mid-1;
+			low = mid+1;
 		else
-			high = mid;
+			high = mid-1;
 	}
-	return mid;
+	return mid + 1;
 }
 
 int main(){
-	int x;
+	int x,y;
 	vector<int> v;
 
 	cout << "Enter some integer (ctrl D to quit): " << endl;
@@ -98,9 +127,9 @@ int main(){
 		v.push_back(x);}
 
 	sort(v);
-	//cout <<"Enter an in from the list of integer: " << endl;
-	x = 2;
-	cout << binarySearch(v,x) << endl;
+//	cout <<"Enter an in from the list of integer: " << endl;
+	 y = 12;
+	cout << binarySearch(v,y) << endl;
 
 	// Tester for sort2 function
 	vector<int> s, l;                    
